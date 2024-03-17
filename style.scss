@@ -1,0 +1,51 @@
+body {
+  background-color: #41435B;
+}
+
+@mixin star() {
+  $fill: ★;
+  $empty: ☆;
+  width: 400px;
+  > * {
+    float: right;
+  }
+
+  label {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    cursor: pointer;
+    padding: 0 10px;
+    @for $i from 5 through 1 {
+      &:nth-of-type(#{$i}):after {
+        animation-delay: $i * .1s;
+      }
+    }
+    &:after {
+      transition: all 1s ease-out;
+      position: absolute;
+      content: '#{$empty}';
+      color: orange;
+      font-size: 65px;
+    }
+  }
+  input {
+    display: none;
+    &:checked {
+      + label:after,
+      ~ label:after {
+        content: '#{$fill}';
+        color: gold;
+        text-shadow: 0 0 10px gold;
+      }
+    }
+  }
+}
+
+.star {
+  @include star();
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
